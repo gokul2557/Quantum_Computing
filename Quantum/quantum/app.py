@@ -13,10 +13,9 @@ import numpy as np
 import streamlit as st
 import matplotlib.pyplot as plt
 
-# Ensure root directory in sys.path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from preprocessing.preprocessing import QUANTUM_FEATURES, ALL_FEATURES
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(BASE_DIR)
+RESULTS_DIR = os.path.join(BASE_DIR, "results") if os.path.exists(os.path.join(BASE_DIR, "results")) else "results"
 from quantum.circuit import build_full_quantum_circuit, get_circuit_summary, draw_circuit_figure
 from utils.helpers import (
     load_system_artifacts,
