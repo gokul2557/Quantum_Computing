@@ -1,0 +1,14 @@
+# Quantum AI Real-Time Fraud Detection System
+# Requirements specification for Streamlit Cloud deployment
+
+streamlit>=1.35.0
+qiskit>=1.0.0
+qiskit-aer>=0.14.0
+qiskit-machine-learning>=0.7.0
+scikit-learn>=1.4.0
+pandas>=2.0.0
+numpy>=1.26.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+joblib>=1.3.0
+dill>=0.3.8
