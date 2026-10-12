@@ -405,7 +405,10 @@ with tab_circuit:
         fig = draw_circuit_figure(full_circuit)
         st.pyplot(fig)
     except Exception as e:
-        st.code(str(full_circuit), language="text")
+        try:
+            st.code(str(full_circuit.decompose()), language="text")
+        except Exception:
+            st.code(str(full_circuit), language="text")
 
     st.markdown("### Circuit Component Breakdown")
     c_info1, c_info2 = st.columns(2)
