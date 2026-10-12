@@ -88,9 +88,34 @@ def get_circuit_summary(qc: QuantumCircuit) -> dict:
 def draw_circuit_figure(qc: QuantumCircuit, style: str = "clifford") -> plt.Figure:
     """
     Generates a high-resolution Matplotlib diagram of the genuine quantum circuit.
+    Decomposes the variational ansatz subcircuit so individual Ry and CNOT gates are visually rendered.
     """
-    fig = qc.draw(output="mpl", style=style)
-    return fig
+    try:
+        circuit_to_draw = qc.decompose()
+    except Exception:
+        circuit_to_draw = qc
+
+    try:
+        fig = circuit_to_draw.draw(output="mpl", style=style)
+        return fig
+    except Exception as e:
+        # If mpl drawer is unavailable, render styled text diagram in a Matplotlib figure
+        text_diagram = str(circuit_to_draw.draw(output="text"))
+        lines = text_diagram.split("\n")
+        max_len = max(len(l) for l in lines) if lines else 20
+        fig, ax = plt.subplots(figsize=(max(12, max_len * 0.12), max(4, len(lines) * 0.35)))
+        ax.text(
+            0.01, 0.5, text_diagram,
+            fontfamily="monospace",
+            fontsize=9,
+            va="center",
+            ha="left",
+            color="#E2E8F0"
+        )
+        fig.patch.set_facecolor("#1E293B")
+        ax.set_facecolor("#1E293B")
+        ax.axis("off")
+        return fig
 
 if __name__ == "__main__":
     qc = build_full_quantum_circuit(4, reps=1)
